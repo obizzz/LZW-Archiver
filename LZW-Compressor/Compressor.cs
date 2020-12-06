@@ -18,7 +18,7 @@ namespace LZW_Compressor
         
         private ulong BitBuffer; // Буфер для хранения байтов во время чтения из файла
         private int BitCounter; // Счетчик для количества битов в буфере
-        
+
         /* Метод для определения наиболее эффективного кол-ва бит для чтения
         Величина MaxBits зависит от размера входного текстового файла
         Данный метод гарантирует наиболее ёмкое сжатие, которое осуществляется
@@ -27,29 +27,29 @@ namespace LZW_Compressor
         {
             var dict = new Dictionary<int, int>
             {
-                {9, (int)Math.Pow(2, 12)},
-                {10, (int)Math.Pow(2, 13)},
-                {11, (int)Math.Pow(2, 14)},
-                {12, (int)Math.Pow(2, 15)},
-                {13, (int)Math.Pow(2, 16)},
-                {14, (int)Math.Pow(2, 17)},
-                {15, (int)Math.Pow(2, 18)},
-                {16, (int)Math.Pow(2, 19)},
-                {17, (int)Math.Pow(2, 20)},
-                {18, (int)Math.Pow(2, 21)},
-                {19, (int)Math.Pow(2, 22)},
-                {20, (int)Math.Pow(2, 23)},
-                {21, (int)Math.Pow(2, 24)},
+                {9, 1 << (9 + 3)},
+                {10, 1 << (10 + 3)},
+                {11, 1 << (11 + 3)},
+                {12, 1 << (12 + 3)},
+                {13, 1 << (13 + 3)},
+                {14, 1 << (14 + 3)},
+                {15, 1 << (15 + 3)},
+                {16, 1 << (16 + 3)},
+                {17, 1 << (17 + 3)},
+                {18, 1 << (18 + 3)},
+                {19, 1 << (19 + 3)},
+                {20, 1 << (20 + 3)},
+                {21, 1 << (21 + 3)},
             };
-            
+
             int maxBits = dict.FirstOrDefault(x => size < x.Value).Key;
 
             if (maxBits == 0)
             {
                 maxBits = dict.Last().Key;
             }
-            
-            return new[] { maxBits, 256 * (int)(Math.Pow(2, maxBits) - 1)};
+
+            return new[] { maxBits, 1 << (maxBits + 8) - 1};
         }
         
         public void Start(string inputFilePath, string outputFilePath)
@@ -75,14 +75,23 @@ namespace LZW_Compressor
         
         public bool Compress(string inputFilePath, string outputFilePath, int maxBits, int dictionarySize)
         {
-            FileStream reader = new FileStream(inputFilePath, FileMode.Open);
+            FileStream reader;
+            try
+            {
+                reader = new FileStream(inputFilePath, FileMode.Open);
+            }
+            catch
+            {
+                throw new FileNotFoundException($"{inputFilePath} не найден");
+            }
+            
             FileStream writer = new FileStream(outputFilePath + ".lzw", FileMode.Create);
 
             MaxBits = maxBits;
             HashBit = MaxBits - 8;
             DictionarySize = dictionarySize;
             
-            var maxValue = (int)Math.Pow(2, MaxBits) - 1;
+            var maxValue = (1 << maxBits) - 1;
             var maxCode = maxValue - 1;
             
             CodeDictionary = new int[DictionarySize];
@@ -180,7 +189,7 @@ namespace LZW_Compressor
         // Метод для нахождения индекса префикса + символа
         private int FindMatch(int prefix, int symbol)
         {
-            int index = (int)(symbol * Math.Pow(2, HashBit) + prefix);
+            int index = (symbol << HashBit) ^ prefix;
             int offset = (index == 0) ? 1 : DictionarySize - index;
 
             while (true)

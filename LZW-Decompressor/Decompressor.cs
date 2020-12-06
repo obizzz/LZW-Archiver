@@ -31,8 +31,17 @@ namespace LZW_Decompressor
         
         public bool Decompress(string inputFilePath, string outputFilePath)
         {
-            FileStream reader = new FileStream(inputFilePath, FileMode.Open);;
-            FileStream writer = new FileStream(outputFilePath, FileMode.Create);;
+            FileStream reader;
+            try
+            {
+                reader = new FileStream(inputFilePath, FileMode.Open);
+            }
+            catch
+            {
+                throw new FileNotFoundException($"{inputFilePath} не найден");
+            }
+            
+            FileStream writer = new FileStream(outputFilePath, FileMode.Create);
 
             try
             {
@@ -45,7 +54,7 @@ namespace LZW_Decompressor
                 MaxBits = BitConverter.ToInt32(data, 0);
                 DictionarySize = BitConverter.ToInt32(data, 4);
                 
-                int maxValue = (int)Math.Pow(2, MaxBits) - 1;
+                int maxValue = (1 << MaxBits) - 1;
                 int maxCode = maxValue - 1;
             
                 int[] prefixDictionary = new int[DictionarySize];
