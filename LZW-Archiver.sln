@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LZW-Compressor", "LZW-Compressor\LZW-Compressor.csproj", "{FA10B5E3-B046-4BDD-9132-33C97567735A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LZW-Decompressor", "LZW-Decompressor\LZW-Decompressor.csproj", "{C35B7078-9D6A-4E99-AA5D-4B8C19A8D7AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA10B5E3-B046-4BDD-9132-33C97567735A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA10B5E3-B046-4BDD-9132-33C97567735A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA10B5E3-B046-4BDD-9132-33C97567735A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA10B5E3-B046-4BDD-9132-33C97567735A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C35B7078-9D6A-4E99-AA5D-4B8C19A8D7AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C35B7078-9D6A-4E99-AA5D-4B8C19A8D7AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C35B7078-9D6A-4E99-AA5D-4B8C19A8D7AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C35B7078-9D6A-4E99-AA5D-4B8C19A8D7AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
