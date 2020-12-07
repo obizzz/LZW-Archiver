@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
+// Кононов К.Г., 11-809, 3 курс, 2020
 namespace LZW_Decompressor
 {
     internal class Program
@@ -8,7 +8,7 @@ namespace LZW_Decompressor
         public static void Main(string[] args)
         {
             Decompressor decompressor;
-            
+
             if (args.Length != 4)
             {
                 Console.WriteLine("Wrong number of arguments");

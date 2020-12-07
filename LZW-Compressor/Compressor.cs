@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
+// Кононов К.Г., 11-809, 3 курс, 2020
 namespace LZW_Compressor
 {
     public class Compressor
@@ -27,8 +28,6 @@ namespace LZW_Compressor
         {
             var dict = new Dictionary<int, int>
             {
-                //{8, 1 << (8 + 3)},
-                {9, 1 << (9 + 3)},
                 {10, 1 << (10 + 3)},
                 {11, 1 << (11 + 3)},
                 {12, 1 << (12 + 3)},
@@ -40,12 +39,8 @@ namespace LZW_Compressor
                 {18, 1 << (18 + 3)},
                 {19, 1 << (19 + 3)},
                 {20, 1 << (20 + 3)},
+                {21, 1 << (21 + 3)}
             };
-
-            if (Environment.Is64BitProcess)
-            {
-                dict.Add(21, 1 << (21 + 3));
-            }
             
             int maxBits = dict.FirstOrDefault(x => size < x.Value).Key;
             
@@ -54,7 +49,7 @@ namespace LZW_Compressor
                 maxBits = dict.Last().Key;
             }
 
-            Console.WriteLine(maxBits);
+            Console.WriteLine($"MaxBits: {maxBits}");
 
             return new[] { maxBits, 1 << (maxBits + 8) - 1};
         }

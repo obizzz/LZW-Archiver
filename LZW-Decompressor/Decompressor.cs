@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
+// Кононов К.Г., 11-809, 3 курс, 2020
 namespace LZW_Decompressor
 {
     public class Decompressor
@@ -21,7 +20,7 @@ namespace LZW_Decompressor
             watch.Stop();
             watch.Reset();
             
-            Console.WriteLine("Распаковка...");
+            //Console.WriteLine("Распаковка...");
             watch.Start();
             Decompress(inputFilePath, outputFilePath);
             watch.Stop();
