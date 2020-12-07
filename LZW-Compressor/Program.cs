@@ -4,11 +4,9 @@ namespace LZW_Compressor
 {
     internal class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
             Compressor decompressor;
-
-            string[] args = Console.ReadLine().Split(' ');
             
             if (args.Length != 4)
             {
@@ -22,8 +20,6 @@ namespace LZW_Compressor
             }
             else
                 Console.WriteLine("Invalid argument command given. Exiting.");
-
-            Console.ReadKey();
         }
     }
 }

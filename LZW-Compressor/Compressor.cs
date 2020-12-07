@@ -111,7 +111,7 @@ namespace LZW_Compressor
                 BitCounter = 0;
 
                 int nextCode = 256;
-                int symbol;
+                int postfix;
                 int prefix;
 
                 /* Запись первых 8 байтов в файл, которые обозначают следующее:
@@ -132,9 +132,9 @@ namespace LZW_Compressor
                 prefix = reader.ReadByte();
 
                 // Чтение символов до конца файла
-                while((symbol = reader.ReadByte()) != -1)
+                while((postfix = reader.ReadByte()) != -1)
                 {
-                    var index = FindMatch(prefix, symbol);
+                    var index = FindMatch(prefix, postfix);
 
                     /* Если в словаре есть такая последовательность символов,
                     то префикс приравнивается этой последовательности,
@@ -149,11 +149,11 @@ namespace LZW_Compressor
                         {
                             CodeDictionary[index] = nextCode++;
                             PrefixDictionary[index] = prefix;
-                            CharDictionary[index] = (byte)symbol;
+                            CharDictionary[index] = (byte)postfix;
                         }
                         
                         WriteCode(writer, prefix); // Вывод префикса в поток
-                        prefix = symbol; // Префикс приравнивается последнему прочитанному символу
+                        prefix = postfix; // Префикс приравнивается последнему прочитанному символу
                     }
                 }
 
@@ -194,14 +194,14 @@ namespace LZW_Compressor
         }
         
         // Метод для нахождения индекса префикса + символа
-        private int FindMatch(int prefix, int symbol)
+        private int FindMatch(int prefix, int postfix)
         {
-            int index = (symbol << HashBit) ^ prefix;
+            int index = (postfix << HashBit) ^ prefix;
             int offset = (index == 0) ? 1 : DictionarySize - index;
 
             while (true)
             {
-                if (CodeDictionary[index] == -1 || PrefixDictionary[index] == prefix && CharDictionary[index] == symbol)
+                if (CodeDictionary[index] == -1 || PrefixDictionary[index] == prefix && CharDictionary[index] == postfix)
                 {
                     return index;
                 }

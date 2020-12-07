@@ -5,11 +5,9 @@ namespace LZW_Decompressor
 {
     internal class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
             Decompressor decompressor;
-
-            string[] args = Console.ReadLine().Split(' ');
             
             if (args.Length != 4)
             {
@@ -23,8 +21,6 @@ namespace LZW_Decompressor
             }
             else
                 Console.WriteLine("Invalid argument command given. Exiting.");
-
-            Console.ReadKey();
         }
     }
 }
